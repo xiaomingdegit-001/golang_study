@@ -38,7 +38,7 @@ func main() {
 	s8 := strings.HasPrefix("http://baidu.com", "http://")
 	fmt.Printf("s8: %v\n", s8)
 	s9 := strings.HasSuffix("http://baidu.com", "com")
-	fmt.Printf("s8: %v\n", s9)
+	fmt.Printf("s9: %v\n", s9)
 
 	// 字符串出现的位置
 	s10 := strings.LastIndex("xxooxxoo", "oo")
