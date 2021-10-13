@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	filepath := "./xx.txt"
+	filepath := "./day03/xx.txt"
 	// 打开文件
 	file, err := os.Open(filepath)
 	if err != nil {
@@ -46,7 +46,7 @@ func main() {
 	fmt.Println(string(readFile))
 
 	// 写文件
-	openFile, openFileErr := os.OpenFile("oo.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0755)
+	openFile, openFileErr := os.OpenFile("./day03/oo.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0755)
 	if openFileErr != nil {
 		fmt.Println(openFileErr)
 		return
