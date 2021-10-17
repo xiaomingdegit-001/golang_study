@@ -1,5 +1,9 @@
 package main
 
+/**
+ * 文件操作
+ */
+
 import (
 	"bufio"
 	"fmt"

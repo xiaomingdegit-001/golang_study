@@ -1,5 +1,9 @@
 package main
 
+/**
+ * 字符串操作
+ */
+
 import (
 	"fmt"
 	"strings"
