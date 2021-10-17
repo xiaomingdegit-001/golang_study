@@ -1,7 +1,7 @@
 package main
 
 /**
- * time包操作
+ * time包相关操作
  */
 
 import (

@@ -1,7 +1,7 @@
 package main
 
 /**
- * 字符串操作
+ * 字符串相关操作
  */
 
 import (
@@ -39,9 +39,9 @@ func main() {
 	fmt.Println(s7)
 
 	// 判断前缀和后缀
-	s8 := strings.HasPrefix("http://baidu.com", "http://")
+	s8 := strings.HasPrefix("https://baidu.com", "https://")
 	fmt.Printf("s8: %v\n", s8)
-	s9 := strings.HasSuffix("http://baidu.com", "com")
+	s9 := strings.HasSuffix("https://baidu.com", "com")
 	fmt.Printf("s9: %v\n", s9)
 
 	// 字符串出现的位置

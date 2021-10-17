@@ -1,7 +1,7 @@
 package main
 
 /**
- * 文件操作
+ * 文件相关操作
  */
 
 import (
