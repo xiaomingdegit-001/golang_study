@@ -116,5 +116,12 @@ func main() {
 	fmt.Printf("读写互斥锁耗时: %v\n", end1.Sub(start1))
 	fmt.Println("------------------------")
 	loadOnce.Do(load)
+	fmt.Println("------------------------")
+
+	// 内置的 map 是线程不安全的
+	// 并发场景下建议使用 sync.Map
+
+	// atomic包
+	// 和Java中Atomic类功能一样
 
 }
