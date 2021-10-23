@@ -1,4 +1,4 @@
-package main
+package myorm
 
 /**
  * orm => gorm
@@ -31,8 +31,8 @@ func connMysql() (*gorm.DB, error) {
 	return db, err
 }
 
-func queryBook(w http.ResponseWriter, r *http.Request) {
-	data, err := query()
+func QueryBook(w http.ResponseWriter, r *http.Request) {
+	data, err := Query2Json()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -44,24 +44,30 @@ func queryBook(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func query() (string, error) {
+func Query() ([]Book, error) {
 	db, err := connMysql()
+	if err != nil {
+		return nil, err
+	}
+	var books []Book
+	db.Find(&books)
+	return books, err
+}
+
+func Query2Json() (string, error) {
+	books, err := Query()
 	if err != nil {
 		return "", err
 	}
-	var book Book
-	db.First(&book)
-	fmt.Printf("book=[id: %d, url: %s, remark: %s, type: %d]\n",
-		book.Id, book.Url, book.Remark, book.Type)
-	j, err := json.Marshal(book)
+	j, err := json.Marshal(books)
 	return string(j), err
 }
 
-func main() {
-	http.HandleFunc("/getBook", queryBook)
+func Start(handler func(http.ResponseWriter, *http.Request)) error {
+	http.HandleFunc("/book", handler)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return err
 	}
+	return nil
 }
