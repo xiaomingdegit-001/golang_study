@@ -1,4 +1,4 @@
-package myorm
+package dbtool
 
 /**
  * orm => gorm
@@ -6,11 +6,9 @@ package myorm
  */
 import (
 	"encoding/json"
-	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
-	"net/http"
 )
 
 type Book struct {
@@ -20,7 +18,7 @@ type Book struct {
 	Type   uint   `json:"type,omitempty"`
 }
 
-func connMysql() (*gorm.DB, error) {
+func ConnMysql() (*gorm.DB, error) {
 	dsn := "root:Ysj666tY#iM@tcp(110.42.206.132:3306)/book?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
@@ -31,43 +29,14 @@ func connMysql() (*gorm.DB, error) {
 	return db, err
 }
 
-func QueryBook(w http.ResponseWriter, r *http.Request) {
-	data, err := Query2Json()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	_, fmtErr := fmt.Fprintln(w, data)
-	if fmtErr != nil {
-		fmt.Println(fmtErr)
-		return
-	}
-}
-
-func Query() ([]Book, error) {
-	db, err := connMysql()
-	if err != nil {
-		return nil, err
-	}
+func Query(db *gorm.DB) []Book {
 	var books []Book
 	db.Find(&books)
-	return books, err
+	return books
 }
 
-func Query2Json() (string, error) {
-	books, err := Query()
-	if err != nil {
-		return "", err
-	}
+func Query2Json(db *gorm.DB) (string, error) {
+	books := Query(db)
 	j, err := json.Marshal(books)
 	return string(j), err
-}
-
-func Start(handler func(http.ResponseWriter, *http.Request)) error {
-	http.HandleFunc("/book", handler)
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		return err
-	}
-	return nil
 }
