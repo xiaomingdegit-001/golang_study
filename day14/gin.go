@@ -42,6 +42,10 @@ func main() {
 	//})
 	// 模板
 	engine.LoadHTMLGlob("./day14/template/**")
+	// gin 请求中间件, 类似Java的Filter
+	engine.Use(func(context *gin.Context) {
+		fmt.Println("=========>>>> 请求拦截 <<<<========")
+	})
 	engine.GET("/book", func(context *gin.Context) {
 		context.HTML(http.StatusOK, "book.tmpl", books)
 	})
