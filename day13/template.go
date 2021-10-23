@@ -17,19 +17,28 @@ func query(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		return
 	}
-	books, err := myorm.Query()
+	db, err := dbtool.ConnMysql()
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
-	terr := t.Execute(w, books)
-	if terr != nil {
-		fmt.Println(terr)
+	books := dbtool.Query(db)
+	tErr := t.Execute(w, books)
+	if tErr != nil {
+		fmt.Println(tErr)
 		return
 	}
 }
 
+func start(handler func(http.ResponseWriter, *http.Request)) error {
+	http.HandleFunc("/book", handler)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func main() {
-
-	myorm.Start(query)
-
+	start(query)
 }
