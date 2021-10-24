@@ -1,14 +1,14 @@
 package main
 
+/**
+ * gin 文件上传
+ */
+
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
-
-/**
- * gin 文件上传
- */
 
 func ok(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{
